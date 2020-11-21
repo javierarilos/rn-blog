@@ -1,11 +1,10 @@
-import { State } from 'react-native-gesture-handler';
 import createDataContext from './createDataContext';
 
 const blogReducer = (blogPosts, action) => {
     switch(action.type) {
         case 'add_blogpost':
             const newBlogPost = {
-                id: Math.floor(Math.random() * 99999),
+                id: ""+Math.floor(Math.random() * 99999),
                 title: `Blogpost #${blogPosts.length + 1}`
             };
             return [...blogPosts, newBlogPost];
@@ -27,5 +26,5 @@ const deleteBlogPost = (dispatch) => {
 export const { Context, Provider } = createDataContext(
     blogReducer, 
     { addBlogPost, deleteBlogPost }, 
-    []
+    [] // an empty Array of blogposts
 );
