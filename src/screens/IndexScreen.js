@@ -8,6 +8,17 @@ import { useNavigation } from '@react-navigation/native';
 const IndexScreen = () => {
     const navigation = useNavigation();
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => { return (
+                // <Button onPress={() => console.log("header but pressed")} title="+"/>
+                <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+                    <Feather name="file-plus" style={{ paddingRight: 10, fontSize: 25 }}/>
+                </TouchableOpacity>
+            )}
+        });
+    });
+
     const { state, addBlogPost, deleteBlogPost }= useContext(BlogContext);
     return (<View>
         <FlatList
