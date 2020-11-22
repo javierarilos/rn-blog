@@ -6,12 +6,17 @@ const CreateScreen = ({ route }) => {
     const [title, setTitle] = React.useState("");
     const [content, setContent] = React.useState("");
 
+    const { addBlogPost } = React.useContext(Context);
+
     return (<View>
         <Text style={styles.label}>Title:</Text>
         <TextInput value={title} onChangeText={setTitle} style={styles.input}/>
         <Text style={styles.label}>Contents:</Text>
         <TextInput value={content} onChangeText={setContent} style={styles.input}/>
-        <Button title="Save BlogPost"/>
+        <Button 
+            title="Save BlogPost"
+            onPress={() => addBlogPost(title, content)}
+        />
     </View>);
 }
 
