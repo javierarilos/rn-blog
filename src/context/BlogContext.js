@@ -17,8 +17,11 @@ const blogReducer = (blogPosts, action) => {
 };
 
 const addBlogPost = (dispatch) => {
-    return (title, content) => dispatch({type: 'add_blogpost', payload: {title, content}})
-}
+    return (title, content, callback) => {
+        dispatch({type: 'add_blogpost', payload: {title, content}});
+        console.log('allo');
+        callback();
+}};
 
 const deleteBlogPost = (dispatch) => {
     return (id) => dispatch({type: 'delete_blogpost', payload: id})

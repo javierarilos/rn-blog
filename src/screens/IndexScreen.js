@@ -19,7 +19,7 @@ const IndexScreen = () => {
         });
     });
 
-    const { state, addBlogPost, deleteBlogPost }= useContext(BlogContext);
+    const { state, deleteBlogPost }= useContext(BlogContext);
     return (<View>
         <FlatList
             data={state} 
@@ -36,7 +36,6 @@ const IndexScreen = () => {
                 );
             }}
          />
-         <Button title="Add Post" onPress={addBlogPost}/>
         <Text>{state.length} Blog Posts</Text>
     </View>);
 }

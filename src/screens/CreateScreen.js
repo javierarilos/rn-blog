@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, Button, } from 'react-native';
 import { Context } from '../context/BlogContext';
 
-const CreateScreen = ({ route }) => {
+const CreateScreen = ({ navigation }) => {
     const [title, setTitle] = React.useState("");
     const [content, setContent] = React.useState("");
 
@@ -15,7 +15,7 @@ const CreateScreen = ({ route }) => {
         <TextInput value={content} onChangeText={setContent} style={styles.input}/>
         <Button 
             title="Save BlogPost"
-            onPress={() => addBlogPost(title, content)}
+            onPress={() => addBlogPost(title, content, () => navigation.navigate("Index"))}
         />
     </View>);
 }
