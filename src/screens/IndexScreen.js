@@ -18,7 +18,12 @@ const IndexScreen = () => {
         });
     });
 
-    const { state, deleteBlogPost }= useContext(BlogContext);
+    React.useEffect(() => {
+        getBlogPosts();
+    },
+    []);
+
+    const { state, deleteBlogPost, getBlogPosts }= useContext(BlogContext);
     return (<View>
         <FlatList
             data={state} 

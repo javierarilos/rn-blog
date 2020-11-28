@@ -1,7 +1,12 @@
 import createDataContext from './createDataContext';
+import jsonServer from '../api/jsonServer';
 
 const blogReducer = (blogPosts, action) => {
+    // blogReducer is called with current state and an action object
+    // it is expected to return the new state. state is immutable, so must be new.
     switch(action.type) {
+        case 'get_blogposts': 
+            return action.payload;
         case 'add_blogpost':
             const newBlogPost = {
                 id: ""+Math.floor(Math.random() * 99999),
@@ -24,6 +29,16 @@ const blogReducer = (blogPosts, action) => {
             return blogPosts;
     }
 };
+
+const getBlogPosts = (dispatch) => {
+    return async () => {
+        const response = await jsonServer.get('/blogposts');
+        const payload = response.data.map(
+            (blogPost, a) =>{ return {id: String(blogPost.id), title: blogPost.title, content: blogPost.content}}
+        );
+        dispatch({type: 'get_blogposts', payload: payload})
+    }
+}
 
 const addBlogPost = (dispatch) => {
     return (title, content, callback) => {
@@ -49,6 +64,6 @@ const updateBlogPost = (dispatch) => {
 
 export const { Context, Provider } = createDataContext(
     blogReducer, 
-    { addBlogPost, deleteBlogPost, updateBlogPost }, 
-    [{id: "757575757", title: "TEST blogpost", content: "something light and entertaining."}] // an empty Array of blogposts
+    { getBlogPosts, addBlogPost, deleteBlogPost, updateBlogPost }, 
+    [] // an empty Array of blogposts
 );
