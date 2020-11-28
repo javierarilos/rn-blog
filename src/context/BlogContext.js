@@ -32,21 +32,28 @@ const blogReducer = (blogPosts, action) => {
 
 const getBlogPosts = (dispatch) => {
     return async () => {
-        const response = await jsonServer.get('/blogposts');
-        const payload = response.data.map(
-            (blogPost, a) =>{ return {id: String(blogPost.id), title: blogPost.title, content: blogPost.content}}
-        );
-        dispatch({type: 'get_blogposts', payload: payload})
+        jsonServer.get('/blogposts').then((response) => {
+            const payload = response.data.map(
+                (blogPost, a) =>{ return {id: String(blogPost.id), title: blogPost.title, content: blogPost.content}}
+            );
+            dispatch({type: 'get_blogposts', payload: payload})
+
+        }).catch(e => console.log(e));
     }
 }
 
 const addBlogPost = (dispatch) => {
-    return (title, content, callback) => {
-        dispatch({type: 'add_blogpost', payload: {title, content}});
-        console.log('allo');
-        if (callback) {
-            callback();
+    return async (title, content, callback) => {
+        // dispatch({type: 'add_blogpost', payload: {title, content}});
+        try {
+            const resp = await jsonServer.post('/blogposts', {title, content});
+            if (callback) {
+                callback();
+            }
+        } catch (err) {
+            console.log("Error: " + err);
         }
+        
 }};
 
 const deleteBlogPost = (dispatch) => {

@@ -20,6 +20,12 @@ const IndexScreen = () => {
 
     React.useEffect(() => {
         getBlogPosts();
+
+        // get blog posts each time we gain focus back
+        const focusListener = navigation.addListener('focus', () => getBlogPosts());
+
+        // useEffect might return a cleanup function that is call whenever the screen is never used again, avoiding memory leak
+        return () => focusListener.remove();
     },
     []);
 
