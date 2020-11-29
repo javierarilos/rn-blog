@@ -44,7 +44,7 @@ const addBlogPost = (dispatch) => {
                 callback();
             }
         } catch (err) {
-            console.log("Error adding: " + err);
+            console.log("Error adding : " + err);
         }
         
 }};
@@ -61,10 +61,15 @@ const deleteBlogPost = (dispatch) => {
 };
 
 const updateBlogPost = (dispatch) => {
-    return (blogPost, callback) => {
-        dispatch({type: 'update_blogpost', payload: blogPost});
-        if (callback) {
-            callback();
+    return async (blogPost, callback) => {
+        try {
+            const resp = await jsonServer.put(`/blogposts/${blogPost.id}`, blogPost);
+            dispatch({type: 'update_blogpost', payload: blogPost});
+            if (callback) {
+                callback();
+            }
+        } catch (err) {
+            console.log("Error adding : " + err);
         }
     };
 };
